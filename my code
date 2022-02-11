@@ -1,0 +1,39 @@
+import random
+import hangman_art
+import word_resource
+from hangman_art import stages
+print(hangman_art.logo)
+print("Welcome to my game of hangman.\n")
+print("You have only 6 lives. Make sure to protect the hangman.\n")
+lives = 6 
+
+chosen_word = random.choice(word_resource.word_list)
+# print(chosen_word)
+no_of_blanks = len(chosen_word)
+display = []
+for i in range(0,no_of_blanks):
+    display.insert(i,'_')
+print(display)
+end_of_game = False
+while not end_of_game:
+    guess = input("Guess a letter.\n").lower()
+    if guess in display:
+        print(f"You have already guessed {guess}.")
+
+    for i in range(no_of_blanks):
+        letter = chosen_word[i]
+        if  letter == guess:
+            display[i] = letter
+            print(display)
+    if guess not in chosen_word:
+        print(f"{guess} is not in the word.You lose a life.")
+        lives -= 1
+        if lives == 0:
+            end_of_game = True
+            print("YOU LOSE")
+    
+    if '_' not in display:
+        end_of_game = True 
+        print("YOU WIN")
+    print(stages[lives])
+    
